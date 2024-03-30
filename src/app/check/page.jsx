@@ -14,6 +14,8 @@ import { useRecoilState } from "recoil";
 import axios from "axios";
 
 const c_add = "0x525C1af37185CC58c68D5a57dC38eA7900c378e3";
+const abstractedAccount = "0x5166ABf6ed977031c002980Ade02494f7bB9E37A";
+const nftCertification = "0xbcBBD5F042e3668ec68afC6C82faAEf92de9c6EE";
 
 const Check = () => {
   const { account, setAccount, web3 } = useContext(AppContext);
@@ -68,6 +70,23 @@ const Check = () => {
     };
   };
 
+  // Step 1: Encrypt data with Fhenix
+  function encryptTransactionData(txData, publicKey) {
+    // Placeholder for encryption logic
+    // You would use public-key encryption suitable for your needs
+    return encryptedTxData;
+  }
+
+  // Assuming you have a smart contract on Layer 2 for storage:
+  async function storeEncryptedDataOnL2(encryptedTxData) {
+    const contract = new ethers.Contract(
+      l2ContractAddress,
+      l2ContractABI,
+      signer
+    );
+    await contract.storeEncryptedData(encryptedTxData);
+  }
+
   const del = () => {
     setImageFile();
     setResult(0);
@@ -117,6 +136,59 @@ const Check = () => {
     console.log("url : ", URL.createObjectURL(file));
     setRegisterStep(2);
   };
+
+  async function encryptData(data) {
+    try {
+      const encryptedData = await fhenix.encrypt(data);
+      return encryptedData;
+    } catch (error) {
+      console.error("Encryption error:", error);
+      throw error;
+    }
+  }
+
+  // Step 2: Store encrypted data in zkEVM Layer 2 (Assuming this is done elsewhere)
+
+  // Step 3: Create NFT with encrypted details
+  // Example usage for encrypting account address and hash
+  const accountAddress = "0x123..."; // Placeholder for actual account address
+  const transactionHash = "0xabc..."; // Placeholder for actual transaction hash
+
+  const encryptedAddress = encryptData(accountAddress);
+  const encryptedHash = encryptData(transactionHash);
+
+  const nftMetadata = {
+    name: `Transaction Receipt: #${txIndex}`,
+    description: "This NFT certifies a transaction was processed.",
+    image: "ipfs://your-ipfs-hash-here",
+    properties: {
+      txIndex: txIndex, // Assuming txIndex is not considered sensitive
+      encryptedAccountAddress: encryptedAddress,
+      changedState: "exampleStateChange", // Placeholder for actual state changes
+      encryptedHash: encryptedHash,
+      // Add any other relevant properties here
+    },
+  };
+
+  async function mintNFT(metadata) {
+    // Using a hypothetical mintNFT function
+    try {
+      const receipt = await sdk.mintNFT({
+        toAddress: "wallet-address-of-the-recipient",
+        metadata: metadata,
+      });
+      console.log("NFT Minted:", receipt);
+      return receipt;
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      throw error;
+    }
+  }
+
+  // Execute the minting process with prepared metadata
+  mintNFT(nftMetadata)
+    .then((receipt) => console.log("Minting successful:", receipt))
+    .catch((error) => console.error("Minting failed:", error));
 
   useEffect(() => {
     if (account) {
