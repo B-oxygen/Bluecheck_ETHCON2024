@@ -36,8 +36,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Smartcontract
 
 01 mumbai
-**Hashing and on-chain & hash value call data**| https://mumbai.polygonscan.com/address/0x525C1af37185CC58c68D5a57dC38eA7900c378e3
+- **Hashing and on-chain & hash value call data**| https://mumbai.polygonscan.com/address/0x525C1af37185CC58c68D5a57dC38eA7900c378e3
 
 02 Fhenix
-**TransactionReceiptNFT**| https://explorer.testnet.fhenix.zone/address/0xbcBBD5F042e3668ec68afC6C82faAEf92de9c6EE
-**Abstracted Account**| https://explorer.testnet.fhenix.zone/address/0x5166ABf6ed977031c002980Ade02494f7bB9E37A
+- **TransactionReceiptNFT**| https://explorer.testnet.fhenix.zone/address/0xbcBBD5F042e3668ec68afC6C82faAEf92de9c6EE
+- **Abstracted Account**| https://explorer.testnet.fhenix.zone/address/0x5166ABf6ed977031c002980Ade02494f7bB9E37A
